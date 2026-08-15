@@ -8,9 +8,9 @@ export AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-ap-southeast-2}"
 export AWS_PAGER=""
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-TAG_PROJECT="${TAG_PROJECT:-seiscomp-containers}"
-ROLE=seiscomp-containers-ssm
-PASS_PARAM=/seiscomp-containers/sysop-rdp-password
+TAG_PROJECT="${TAG_PROJECT:-seiscomp-containers-lab}"
+ROLE=seiscomp-containers-lab-ssm
+PASS_PARAM=/seiscomp-containers-lab/sysop-rdp-password
 INSTANCE_TYPE="${INSTANCE_TYPE:-t3.xlarge}"
 
 MYIP=$(curl -sS https://checkip.amazonaws.com | tr -d '[:space:]')

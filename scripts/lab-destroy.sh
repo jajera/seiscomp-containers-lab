@@ -7,7 +7,7 @@ export AWS_PROFILE="${AWS_PROFILE:-sandbox}"
 export AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-ap-southeast-2}"
 export AWS_PAGER=""
 
-TAG_PROJECT="${TAG_PROJECT:-seiscomp-containers}"
+TAG_PROJECT="${TAG_PROJECT:-seiscomp-containers-lab}"
 ALL=0
 if [ "${1:-}" = "--all" ]; then
   ALL=1
@@ -77,7 +77,7 @@ if [ -n "$VPC" ] && [ "$VPC" != "None" ]; then
   aws ec2 delete-vpc --vpc-id "$VPC"
 fi
 
-ROLE=seiscomp-containers-ssm
+ROLE=seiscomp-containers-lab-ssm
 aws iam remove-role-from-instance-profile --instance-profile-name "$ROLE" --role-name "$ROLE" || true
 aws iam delete-instance-profile --instance-profile-name "$ROLE" || true
 aws iam detach-role-policy --role-name "$ROLE" \

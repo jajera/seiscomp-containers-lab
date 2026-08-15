@@ -36,6 +36,6 @@ export AWS_PROFILE=sandbox AWS_DEFAULT_REGION=ap-southeast-2
 ./scripts/lab-destroy.sh     # add --all to drop VPC/IAM
 ```
 
-RDP as `sysop`, session **Xorg**. Password: SSM `/seiscomp-containers/sysop-rdp-password`. On the desktop: `/home/sysop/bin/sc-toast-event "test toast"`.
+RDP as `sysop`, session **Xorg**. Password: SSM `/seiscomp-containers-lab/sysop-rdp-password`. On the desktop: `/home/sysop/bin/sc-toast-event "test toast"`.
 
 Preview docs: `./scripts/docs-serve.sh` then <http://127.0.0.1:4000/seiscomp-containers-lab/>.

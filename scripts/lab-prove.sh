@@ -6,7 +6,7 @@ export AWS_PROFILE="${AWS_PROFILE:-sandbox}"
 export AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-ap-southeast-2}"
 export AWS_PAGER=""
 
-TAG_PROJECT="${TAG_PROJECT:-seiscomp-containers}"
+TAG_PROJECT="${TAG_PROJECT:-seiscomp-containers-lab}"
 IID="${IID:-}"
 if [ -z "$IID" ]; then
   IID=$(aws ec2 describe-instances \

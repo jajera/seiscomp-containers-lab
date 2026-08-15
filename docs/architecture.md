@@ -22,9 +22,6 @@ One VPC, one public subnet, one Ubuntu host running Docker Compose. Each SeisCom
 
 Each SeisComP process is a Compose service in the foreground. gsm runs **once**, in `docker/Dockerfile`, producing `seiscomp-base:7.3.1`. Other services reuse that image with a different `command`.
 
-{: .note }
-> AWS tags stay `Project=seiscomp-containers` so an existing sandbox VPC is reused. The tree on the instance is `/home/ubuntu/seiscomp-containers-lab`.
-
 ## Network
 
 | Resource | Notes |
@@ -32,7 +29,7 @@ Each SeisComP process is a Compose service in the foreground. gsm runs **once**,
 | VPC | `10.82.0.0/16`, DNS hostnames on |
 | Public subnet | `10.82.1.0/24`, map public IPv4 on launch |
 | Security group | egress all; inbound TCP **3389** from your `/32` only |
-| IAM instance profile | `seiscomp-containers-ssm` (`AmazonSSMManagedInstanceCore`) |
+| IAM instance profile | `seiscomp-containers-lab-ssm` (`AmazonSSMManagedInstanceCore`) |
 | Elastic IP | associated while you want a stable RDP address |
 
 ### Not opened

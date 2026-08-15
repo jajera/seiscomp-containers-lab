@@ -24,12 +24,12 @@ XFCE and xrdp run in the `gui` container, not on the Ubuntu host session.
 |---|---|
 | User | `sysop` |
 | Session | **Xorg** |
-| Password | SSM `/seiscomp-containers/sysop-rdp-password` |
+| Password | SSM `/seiscomp-containers-lab/sysop-rdp-password` |
 | Port | TCP 3389 from your `/32` |
 
 ```bash
 export AWS_PROFILE=sandbox AWS_DEFAULT_REGION=ap-southeast-2
-aws ssm get-parameter --name /seiscomp-containers/sysop-rdp-password \
+aws ssm get-parameter --name /seiscomp-containers-lab/sysop-rdp-password \
   --with-decryption --query Parameter.Value --output text
 ```
 

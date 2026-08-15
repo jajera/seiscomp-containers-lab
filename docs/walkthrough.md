@@ -36,7 +36,7 @@ export AWS_PROFILE=sandbox AWS_DEFAULT_REGION=ap-southeast-2 AWS_PAGER=""
 
 That script:
 
-1. Reuses VPC/IAM tagged `Project=seiscomp-containers`, or creates them
+1. Reuses VPC/IAM tagged `Project=seiscomp-containers-lab`, or creates them
 2. Opens TCP 3389 from your current public `/32`
 3. Launches Ubuntu 24.04 `t3.xlarge` with `docker/ec2-user-data.sh` (Docker Engine)
 4. Associates an Elastic IP
