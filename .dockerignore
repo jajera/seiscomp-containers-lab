@@ -1,0 +1,6 @@
+docs
+*.md
+.gitignore
+.DS_Store
+*.tar.gz
+*.xml

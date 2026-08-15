@@ -1,0 +1,19 @@
+{%- comment -%}
+  Next page in sidebar order (nav_order). Last page has no link.
+{%- endcomment -%}
+{%- assign ordered = site.html_pages
+  | where_exp: "p", "p.nav_order != nil"
+  | where_exp: "p", "p.nav_exclude != true"
+  | sort: "nav_order" -%}
+{%- assign next_page = nil -%}
+{%- for p in ordered -%}
+  {%- if p.url != page.url and p.nav_order > page.nav_order -%}
+    {%- assign next_page = p -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- if next_page -%}
+<nav class="conduit-next" aria-label="Next page">
+  <a href="{{ next_page.url | relative_url }}">Next: {{ next_page.title }}</a>
+</nav>
+{%- endif -%}

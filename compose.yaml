@@ -1,0 +1,202 @@
+name: seiscomp
+
+services:
+  mariadb:
+    image: mariadb:11.4
+    environment:
+      MARIADB_DATABASE: seiscomp
+      MARIADB_USER: sysop
+      MARIADB_PASSWORD: sysop
+      MARIADB_ROOT_PASSWORD: sysop
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_bin
+      - --innodb-buffer-pool-size=512M
+      - --bind-address=0.0.0.0
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 24
+    networks:
+      - scnet
+
+  scmaster:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    image: seiscomp-base:7.3.1
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:18180:18180"
+    networks:
+      scnet:
+        aliases:
+          - scmaster
+
+  seedlink:
+    image: seiscomp-base:7.3.1
+    user: "0:0"
+    command: ["/docker/run-seedlink.sh"]
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      scmaster:
+        condition: service_started
+    volumes:
+      - seedlink_data:/home/sysop/seiscomp/var/lib/seedlink
+    ports:
+      - "127.0.0.1:18000:18000"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python3",
+          "-c",
+          "import socket; socket.create_connection(('127.0.0.1',18000),2).close()",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 18
+      start_period: 180s
+    networks:
+      scnet:
+        aliases:
+          - seedlink
+
+  slarchive:
+    image: seiscomp-base:7.3.1
+    user: "0:0"
+    command: ["/docker/run-slarchive.sh"]
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      seedlink:
+        condition: service_healthy
+    volumes:
+      - sds_archive:/home/sysop/seiscomp/var/lib/archive
+    networks:
+      - scnet
+
+  scautopick:
+    image: seiscomp-base:7.3.1
+    command: ["seiscomp", "exec", "scautopick", "--console", "1"]
+    restart: unless-stopped
+    depends_on:
+      scmaster:
+        condition: service_started
+      seedlink:
+        condition: service_healthy
+    networks:
+      - scnet
+
+  scautoloc:
+    image: seiscomp-base:7.3.1
+    command: ["seiscomp", "exec", "scautoloc", "--console", "1"]
+    restart: unless-stopped
+    depends_on:
+      scmaster:
+        condition: service_started
+    networks:
+      - scnet
+
+  scamp:
+    image: seiscomp-base:7.3.1
+    command: ["seiscomp", "exec", "scamp", "--console", "1"]
+    restart: unless-stopped
+    depends_on:
+      scmaster:
+        condition: service_started
+    networks:
+      - scnet
+
+  scmag:
+    image: seiscomp-base:7.3.1
+    command: ["seiscomp", "exec", "scmag", "--console", "1"]
+    restart: unless-stopped
+    depends_on:
+      scmaster:
+        condition: service_started
+    networks:
+      - scnet
+
+  scevent:
+    image: seiscomp-base:7.3.1
+    command: ["seiscomp", "exec", "scevent", "--console", "1"]
+    restart: unless-stopped
+    depends_on:
+      scmaster:
+        condition: service_started
+    networks:
+      - scnet
+
+  scqc:
+    image: seiscomp-base:7.3.1
+    command: ["seiscomp", "exec", "scqc", "--console", "1"]
+    restart: unless-stopped
+    depends_on:
+      scmaster:
+        condition: service_started
+      seedlink:
+        condition: service_healthy
+    networks:
+      - scnet
+
+  scevtlog:
+    image: seiscomp-base:7.3.1
+    command: ["seiscomp", "exec", "scevtlog", "--console", "1"]
+    restart: unless-stopped
+    depends_on:
+      scmaster:
+        condition: service_started
+    networks:
+      - scnet
+
+  fdsnws:
+    image: seiscomp-base:7.3.1
+    command: ["seiscomp", "exec", "fdsnws", "--console", "1"]
+    restart: unless-stopped
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      seedlink:
+        condition: service_healthy
+      slarchive:
+        condition: service_started
+    volumes:
+      - sds_archive:/home/sysop/seiscomp/var/lib/archive:ro
+    ports:
+      - "127.0.0.1:8080:8080"
+    networks:
+      - scnet
+
+  gui:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.gui
+    image: seiscomp-gui:7.3.1
+    hostname: seiscomp-gui
+    shm_size: 2gb
+    environment:
+      SYSOP_PASSWORD: ${SYSOP_PASSWORD:-sysop}
+    ports:
+      - "3389:3389"
+    depends_on:
+      scmaster:
+        condition: service_started
+      seedlink:
+        condition: service_healthy
+    networks:
+      - scnet
+
+volumes:
+  mariadb_data:
+  seedlink_data:
+  sds_archive:
+
+networks:
+  scnet:

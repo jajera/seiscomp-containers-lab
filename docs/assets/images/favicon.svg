@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="SeisComP containers lab">
+  <rect width="32" height="32" rx="8" fill="#0e7490"/>
+  <rect x="6" y="7" width="20" height="7" rx="1.6" fill="none" stroke="#f5fffd" stroke-width="1.7"/>
+  <rect x="6" y="16" width="20" height="7" rx="1.6" fill="none" stroke="#f5fffd" stroke-width="1.7"/>
+  <path d="M8 10.5h16M8 19.5h16" fill="none" stroke="#67e8f9" stroke-width="1.2" stroke-linecap="round"/>
+</svg>

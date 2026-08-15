@@ -1,0 +1,9 @@
+#!/bin/bash
+set -e
+export SEISCOMP_ROOT=/home/sysop/seiscomp
+export PATH="$SEISCOMP_ROOT/bin:$PATH"
+export LD_LIBRARY_PATH="$SEISCOMP_ROOT/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+export PYTHONPATH="$SEISCOMP_ROOT/lib/python${PYTHONPATH:+:$PYTHONPATH}"
+export QT_QPA_PLATFORM=xcb
+cd "$HOME"
+exec "$SEISCOMP_ROOT/bin/$1" "${@:2}"
