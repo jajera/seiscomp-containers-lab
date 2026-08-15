@@ -1,0 +1,8 @@
+.DS_Store
+*.tar.gz
+.env
+docs/_site/
+docs/.jekyll-cache/
+docs/.jekyll-metadata
+docs/.sass-cache/
+docs/vendor/

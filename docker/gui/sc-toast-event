@@ -1,0 +1,15 @@
+#!/bin/bash
+set +e
+uid=$(id -u)
+export HOME="${HOME:-/home/sysop}"
+npid=$(pgrep -u "$uid" -f 'xfce4/notifyd/xfce4-notifyd' | head -1)
+[ -z "$npid" ] && exit 0
+export DBUS_SESSION_BUS_ADDRESS=$(tr '\0' '\n' < "/proc/$npid/environ" | sed -n 's/^DBUS_SESSION_BUS_ADDRESS=//p' | head -1)
+export DISPLAY=$(tr '\0' '\n' < "/proc/$npid/environ" | sed -n 's/^DISPLAY=//p' | head -1)
+body="$*"
+[ -n "$body" ] || body="New SeisComP event"
+gdbus call --session --dest org.freedesktop.Notifications \
+  --object-path /org/freedesktop/Notifications \
+  --method org.freedesktop.Notifications.Notify \
+  SeisComP 0 dialog-information "SeisComP" "$body" '[]' '{}' 8000 >/dev/null
+logger -t scalert "toast: $body"

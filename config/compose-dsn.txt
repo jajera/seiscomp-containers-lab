@@ -1,0 +1,15 @@
+Always use Compose DNS (one process per service). Do not leave these on localhost except inside a single-process container talking to itself.
+
+  MariaDB: CREATE USER via image env (sysop@%, password sysop);
+           GRANT ALL ON seiscomp.* ; schema loaded by scmaster entrypoint from share/db/mysql.sql
+
+  global.cfg:
+           database = mysql://sysop:sysop@mariadb/seiscomp
+           connection.server = scmaster/production
+           recordstream = slink://seedlink:18000
+
+  scmaster.cfg:
+           interface.bind = 0.0.0.0:18180
+           queues.production.processors.messages.dbstore.read  = sysop:sysop@mariadb/seiscomp
+           queues.production.processors.messages.dbstore.write = sysop:sysop@mariadb/seiscomp
+
