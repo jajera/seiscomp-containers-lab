@@ -2,7 +2,7 @@
 
 Unofficial LEARN SeisComP lab as **one Docker Compose service per process**, images built with **gsm** (not a source compile).
 
-This is **not** gempa-supported. The supported path (Linux LTS + gsm, no containers) is [seiscomp-lab](https://jajera.github.io/seiscomp-lab/).
+This is **not** gempa-supported.
 
 **[Documentation](https://jajera.github.io/seiscomp-containers-lab/)** — architecture, walkthrough, prove, desktop, troubleshooting.
 

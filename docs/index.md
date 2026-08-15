@@ -8,9 +8,8 @@ nav_order: 1
   <p class="conduit-kicker">jajera · seiscomp-containers-lab</p>
   <h1>SeisComP containers lab</h1>
   <p class="conduit-lede">
-    The same LEARN SeisComP stack as the host lab, but one Docker Compose service
-    per process. Images are built with public gsm, not a source compile.
-    Unofficial. Not gempa-supported.
+    LEARN SeisComP as one Docker Compose service per process. Images are built
+    with public gsm, not a source compile. Unofficial. Not gempa-supported.
   </p>
   <div class="conduit-actions">
     <a class="conduit-btn conduit-btn--primary" href="{{ site.baseurl }}/walkthrough/">Deploy the lab</a>
@@ -21,8 +20,6 @@ nav_order: 1
 ## What you build
 
 One EC2 in a public subnet. Docker Compose runs MariaDB, scmaster, seedlink, slarchive, the processors, fdsnws, and an XFCE + xrdp sidecar. You reach the box with SSM. RDP opens the `gui` container for `scrttv` and the other public GUIs.
-
-The supported gempa path is still **Linux LTS + gsm** with no containers: [seiscomp-lab](https://jajera.github.io/seiscomp-lab/). Use that unless you are specifically trying Compose.
 
 ## Read in this order
 

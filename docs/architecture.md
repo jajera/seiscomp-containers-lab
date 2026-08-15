@@ -20,7 +20,7 @@ One VPC, one public subnet, one Ubuntu host running Docker Compose. Each SeisCom
 
 ## Why this layout
 
-The host lab puts every module on one OS. This lab peels that into Compose so each service is one foreground process. gsm still runs **once**, in `docker/Dockerfile`, producing `seiscomp-base:7.3.1`. Other services reuse that image with a different `command`.
+Each SeisComP process is a Compose service in the foreground. gsm runs **once**, in `docker/Dockerfile`, producing `seiscomp-base:7.3.1`. Other services reuse that image with a different `command`.
 
 {: .note }
 > AWS tags stay `Project=seiscomp-containers` so an existing sandbox VPC is reused. The tree on the instance is `/home/ubuntu/seiscomp-containers-lab`.

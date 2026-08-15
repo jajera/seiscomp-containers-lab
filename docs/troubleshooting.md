@@ -46,7 +46,7 @@ scmaster and seedlink both used to load `mysql.sql`. The entrypoint waits until 
 
 ## Localhost binds vs Compose DNS
 
-Host lab used `127.0.0.1` for scmaster, MariaDB, and fdsnws. That fails across containers. Use service names and `0.0.0.0` on the compose network. Do not publish 18000 / 18180 / 3306 / 8080 on the security group.
+Binding scmaster, MariaDB, or fdsnws to `127.0.0.1` fails across containers. Use service names and `0.0.0.0` on the compose network. Do not publish 18000 / 18180 / 3306 / 8080 on the security group.
 
 ## seedlink is stateful
 

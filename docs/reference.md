@@ -59,7 +59,3 @@ Create inventory **before** relying on `update-config` for those keys. `GE.BFO` 
 ## Lab passwords
 
 MariaDB `sysop` / `sysop` is lab-only, compose network only. RDP password is a SecureString at `/seiscomp-containers/sysop-rdp-password`. Do not commit `.env`.
-
-## Host lab
-
-Same LEARN stations and gsm pin: [seiscomp-lab](https://jajera.github.io/seiscomp-lab/).
