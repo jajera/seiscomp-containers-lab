@@ -4,7 +4,7 @@ Unofficial LEARN SeisComP lab as **one Docker Compose service per process**, ima
 
 This is **not** gempa-supported.
 
-**[Documentation](https://jajera.github.io/seiscomp-containers-lab/)** — architecture, walkthrough, prove, desktop, troubleshooting.
+**[Documentation](https://seiscomp-containers-lab.johna.kiwi/)** — architecture, walkthrough, prove, desktop, troubleshooting.
 
 | | |
 |---|---|
