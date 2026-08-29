@@ -5,8 +5,8 @@ description: >-
 
 theme: just-the-docs
 
-url: https://jajera.github.io
-baseurl: /seiscomp-containers-lab
+url: https://seiscomp-containers-lab.johna.kiwi
+baseurl: ""
 
 permalink: pretty
 
